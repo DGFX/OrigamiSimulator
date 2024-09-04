@@ -3,7 +3,7 @@
  */
 
 
-function initGlobals(){
+function initGlobals() {
 
     var _globals = {
 
@@ -13,7 +13,7 @@ function initGlobals(){
         //view
         colorMode: "color",
         calcFaceStrain: false,
-        color1: "ec008b",
+        color1: "9b111e",
         color2: "dddddd",
         edgesVisible: true,
         mtnsVisible: true,
@@ -92,7 +92,7 @@ function initGlobals(){
         rotateModel: null,
         rotationSpeed: 0.01,
 
-        backgroundColor:"ffffff",
+        backgroundColor: "ffffff",
 
         capturer: null,
         capturerQuality: 63,
@@ -106,17 +106,17 @@ function initGlobals(){
         shouldAnimateFoldPercent: false
     };
 
-    function setCreasePercent(percent){
+    function setCreasePercent(percent) {
         _globals.creasePercent = percent;
         percent *= 100;
-        $("#creasePercent>div").slider({value:percent});
+        $("#creasePercent>div").slider({ value: percent });
         $("#creasePercent>input").val(percent.toFixed(0));
-        $("#creasePercentNav>div").slider({value:percent});
-        $("#creasePercentBottom>div").slider({value:percent});
+        $("#creasePercentNav>div").slider({ value: percent });
+        $("#creasePercentBottom>div").slider({ value: percent });
     }
     _globals.setCreasePercent = setCreasePercent;
 
-    function warn(msg){
+    function warn(msg) {
         if (($("#warningMessage").html()) != "") $("#warningMessage").append("<br/><hr>" + msg);
         else $("#warningMessage").html(msg);
         if (!$('#warningModal').hasClass('show')) $("#warningModal").modal("show");
@@ -126,7 +126,7 @@ function initGlobals(){
     });
     _globals.warn = warn;
 
-    function noCreasePatternAvailable(){
+    function noCreasePatternAvailable() {
         return $("#svgViewer>svg").length == 0;
     }
     _globals.noCreasePatternAvailable = noCreasePatternAvailable;

@@ -7,9 +7,9 @@ function initThreeView(globals) {
     var scene = new THREE.Scene();
     var modelWrapper = new THREE.Object3D();
 
-    var camera = new THREE.PerspectiveCamera(60, window.innerWidth/window.innerHeight, 0.1, 500);
+    var camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 500);
     // var camera = new THREE.OrthographicCamera(window.innerWidth / -2, window.innerWidth / 2, window.innerHeight / 2, window.innerHeight / -2, -10000, 10000);//-40, 40);
-    var renderer = new THREE.WebGLRenderer({antialias: true});
+    var renderer = new THREE.WebGLRenderer({ antialias: true });
     // var svgRenderer = new THREE.SVGRenderer();
     var controls;
 
@@ -18,7 +18,7 @@ function initThreeView(globals) {
     function init() {
 
         var container = $("#threeContainer");
-        renderer.setPixelRatio( window.devicePixelRatio );
+        renderer.setPixelRatio(window.devicePixelRatio);
         renderer.setSize(window.innerWidth, window.innerHeight);
         container.append(renderer.domElement);
 
@@ -59,14 +59,14 @@ function initThreeView(globals) {
         controls.staticMoving = true;
         controls.dynamicDampingFactor = 0.3;
         controls.minDistance = 1;
-	    controls.maxDistance = 30;
+        controls.maxDistance = 30;
         // controls.addEventListener("change", render);
 
         _render();//render before model loads
 
     }
 
-    function resetCamera(){
+    function resetCamera() {
         camera.zoom = 7;
         camera.updateProjectionMatrix();
         camera.position.x = 5;
@@ -75,45 +75,45 @@ function initThreeView(globals) {
         if (controls) setCameraIso();
     }
 
-    function setCameraX(sign){
-        controls.reset(new THREE.Vector3(sign,0,0));
+    function setCameraX(sign) {
+        controls.reset(new THREE.Vector3(sign, 0, 0));
     }
-    function setCameraY(sign){
-        controls.reset(new THREE.Vector3(0,sign,0));
+    function setCameraY(sign) {
+        controls.reset(new THREE.Vector3(0, sign, 0));
     }
-    function setCameraZ(sign){
-        controls.reset(new THREE.Vector3(0,0,sign));
+    function setCameraZ(sign) {
+        controls.reset(new THREE.Vector3(0, 0, sign));
     }
-    function setCameraIso(){
-        controls.reset(new THREE.Vector3(1,1,1));
+    function setCameraIso() {
+        controls.reset(new THREE.Vector3(1, 1, 1));
     }
 
-    function startAnimation(){
+    function startAnimation() {
         console.log("starting animation");
         renderer.animate(_loop);
     }
 
-    function pauseSimulation(){
+    function pauseSimulation() {
         globals.simulationRunning = false;
         console.log("pausing simulation");
     }
 
-    function startSimulation(){
+    function startSimulation() {
         console.log("starting simulation");
         globals.simulationRunning = true;
     }
 
     var captureStats = $("#stopRecord>span");
-    function _render(){
-        if (globals.vrEnabled){
+    function _render() {
+        if (globals.vrEnabled) {
             globals.vive.render();
             return;
         }
         renderer.render(scene, camera);
         if (globals.capturer) {
-            if (globals.capturer == "png"){
+            if (globals.capturer == "png") {
                 var canvas = globals.threeView.renderer.domElement;
-                canvas.toBlob(function(blob) {
+                canvas.toBlob(function (blob) {
                     saveAs(blob, globals.screenRecordFilename + ".png");
                 }, "image/png");
                 globals.capturer = null;
@@ -122,25 +122,25 @@ function initThreeView(globals) {
                 globals.threeView.onWindowResize();
                 return;
             }
-            captureStats.html("( " + ++globals.capturerFrames + " frames  at " + globals.currentFPS  + "fps )");
+            captureStats.html("( " + ++globals.capturerFrames + " frames  at " + globals.currentFPS + "fps )");
             globals.capturer.capture(renderer.domElement);
         }
     }
 
-    function _loop(){
-        if (globals.rotateModel !== null){
+    function _loop() {
+        if (globals.rotateModel !== null) {
             if (globals.rotateModel == "x") modelWrapper.rotateX(globals.rotationSpeed);
             if (globals.rotateModel == "y") modelWrapper.rotateY(globals.rotationSpeed);
             if (globals.rotateModel == "z") modelWrapper.rotateZ(globals.rotationSpeed);
         }
-        if (globals.needsSync){
+        if (globals.needsSync) {
             globals.model.sync();
         }
-        if (globals.simNeedsSync){
+        if (globals.simNeedsSync) {
             globals.model.syncSolver();
         }
         if (globals.simulationRunning) globals.model.step();
-        if (globals.vrEnabled){
+        if (globals.vrEnabled) {
             _render();
             return;
         }
@@ -148,13 +148,13 @@ function initThreeView(globals) {
         _render();
     }
 
-    function sceneAddModel(object){
+    function sceneAddModel(object) {
         modelWrapper.add(object);
     }
 
     function onWindowResize() {
 
-        if (globals.vrEnabled){
+        if (globals.vrEnabled) {
             globals.warn("Can't resize window when in VR mode.");
             return;
         }
@@ -168,11 +168,11 @@ function initThreeView(globals) {
 
         var scale = 1;
         if (globals.shouldScaleCanvas) scale = globals.capturerScale;
-        renderer.setSize(scale*window.innerWidth, scale*window.innerHeight);
+        renderer.setSize(scale * window.innerWidth, scale * window.innerHeight);
         controls.handleResize();
     }
 
-    function enableControls(state){
+    function enableControls(state) {
         controls.enabled = state;
         controls.enableRotate = state;
     }
@@ -209,13 +209,13 @@ function initThreeView(globals) {
     //     document.body.removeChild(downloadLink);
     // }
 
-    function resetModel(){
-        modelWrapper.rotation.set(0,0,0);
+    function resetModel() {
+        modelWrapper.rotation.set(0, 0, 0);
     }
 
-    function setBackgroundColor(color){
+    function setBackgroundColor(color) {
         if (color === undefined) color = globals.backgroundColor;
-        scene.background.setStyle( "#" + color);
+        scene.background.setStyle("#" + color);
     }
 
     return {
@@ -230,17 +230,17 @@ function initThreeView(globals) {
         scene: scene,
         camera: camera,//needed for user interaction
         renderer: renderer,//needed for VR
-        modelWrapper:modelWrapper,
+        modelWrapper: modelWrapper,
 
         // saveSVG: saveSVG,//svg screenshot
 
-        setCameraX:setCameraX,
+        setCameraX: setCameraX,
         setCameraY: setCameraY,
         setCameraZ: setCameraZ,
         setCameraIso: setCameraIso,
 
         resetModel: resetModel,//reset model orientation
-        resetCamera:resetCamera,
+        resetCamera: resetCamera,
         setBackgroundColor: setBackgroundColor
     }
 }
