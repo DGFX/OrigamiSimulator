@@ -119,7 +119,7 @@ function initModel(globals) {
                 polygonOffsetUnits: 1
             });
 
-            const textureLoader = new THREE.TextureLoader().load('https://blenderartists.org/uploads/default/original/3X/0/7/075ae7e7c34c28333e0700b62c5fa70b7c2365f3.jpg', (buffer) => {
+            const textureLoader = new THREE.TextureLoader().load('https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/2a1ca1da-d216-43c2-8bbc-1ed6e5fe86de/d9dxw7l-042d1fe1-49fc-4317-b46a-f9281c2b66c2.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzJhMWNhMWRhLWQyMTYtNDNjMi04YmJjLTFlZDZlNWZlODZkZVwvZDlkeHc3bC0wNDJkMWZlMS00OWZjLTQzMTctYjQ2YS1mOTI4MWMyYjY2YzIucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.fOPnK5sbe8TY62rymYa1vupsK8MQVXyu9GpH1fkfqPE', (buffer) => {
                 material.map = buffer;
             });
 
